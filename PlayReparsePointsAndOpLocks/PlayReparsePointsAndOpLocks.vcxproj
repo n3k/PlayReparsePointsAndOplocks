@@ -154,6 +154,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CreateDosDeviceLink.c" />
+    <ClCompile Include="Hardlink.c" />
     <ClCompile Include="MountPoint.c" />
     <ClCompile Include="oplock.c" />
     <ClCompile Include="PlayReparsePointsAndOpLocks.c">

@@ -1,7 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include <Windows.h>
-
+#include <winternl.h>
 
 void create_dos_device_symlink(WCHAR *src, WCHAR *dst);
 void remove_dos_device_symlink(WCHAR *src, WCHAR *dst);
@@ -34,6 +34,36 @@ void delete_oplock(FILE_OPLOCK *opLock);
 void create_pseudo_symlink(WCHAR *src, WCHAR *dst);
 void delete_pseudo_symlink(WCHAR *src, WCHAR *dst);
 
+
+
+typedef NTSTATUS(__stdcall *_ZwSetInformationFile)(
+	_In_   HANDLE                 FileHandle,
+	_Out_  PIO_STATUS_BLOCK       IoStatusBlock,
+	_In_   PVOID                  FileInformation,
+	_In_   ULONG                  Length,
+	_In_   ULONG			      FileInformationClass
+	);
+
+typedef NTSTATUS(NTAPI* _NtOpenFile)(
+	_Out_ PHANDLE            FileHandle,
+	_In_  ACCESS_MASK        DesiredAccess,
+	_In_  POBJECT_ATTRIBUTES ObjectAttributes,
+	_Out_ PIO_STATUS_BLOCK   IoStatusBlock,
+	_In_  ULONG              ShareAccess,
+	_In_  ULONG              OpenOptions
+	);
+
+typedef void (NTAPI *_RtlInitUnicodeString)(
+	PUNICODE_STRING DestinationString,
+	PCWSTR SourceString
+	);
+
+_ZwSetInformationFile fpZwSetInformationFile;
+_NtOpenFile fpNtOpenFile;
+_RtlInitUnicodeString fpRtlInitUnicodeString;
+
+
+BOOL create_hardlink(WCHAR *srcNativeFile, WCHAR *targetFile);
 
 // Util
 WCHAR **parse_arguments(WCHAR *command_line, WCHAR arg_delim);
