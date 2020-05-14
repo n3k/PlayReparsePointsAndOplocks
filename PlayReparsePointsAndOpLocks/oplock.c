@@ -70,7 +70,7 @@ FILE_OPLOCK* create_oplock(WCHAR *filename, DWORD shareMode, UserCallback opLock
 	HANDLE hFile = open_file_overlapped(filename, shareMode);
 	if (hFile == NULL) {
 		printf("-> error opening the file %S for the opLock: %08x\n", filename, GetLastError());
-		exit(-1);
+		return NULL;
 	}	
 	opLock->hFile = hFile;
 
@@ -81,7 +81,7 @@ FILE_OPLOCK* create_oplock(WCHAR *filename, DWORD shareMode, UserCallback opLock
 	if (opLock->ptpWait == NULL)
 	{
 		printf("-> error creating threadpool %08x\n", GetLastError());
-		exit(-1);
+		return NULL;
 	}
 
 	SetThreadpoolWait(opLock->ptpWait, opLock->overlapped.hEvent, NULL);
@@ -95,7 +95,7 @@ FILE_OPLOCK* create_oplock(WCHAR *filename, DWORD shareMode, UserCallback opLock
 	DWORD err = GetLastError();
 	if (err != ERROR_IO_PENDING) {
 		printf("-> DeviceIoControl for the Oplock Failed %08x\n", err);
-		return;
+		return NULL;
 	}
 
 	return opLock;
