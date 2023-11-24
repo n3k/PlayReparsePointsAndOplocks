@@ -53,7 +53,7 @@ void _WaitCallback(PTP_CALLBACK_INSTANCE Instance,
 	SetEvent(opLock->g_hLockCompleted);
 }
 
-FILE_OPLOCK* create_oplock(WCHAR *filename, DWORD shareMode, UserCallback opLockCallback) {
+__declspec(dllexport) FILE_OPLOCK* create_oplock(WCHAR *filename, DWORD shareMode, UserCallback opLockCallback) {
 	FILE_OPLOCK *opLock = (FILE_OPLOCK *)HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, sizeof(FILE_OPLOCK));
 
 	opLock->Callback = opLockCallback;
@@ -101,11 +101,11 @@ FILE_OPLOCK* create_oplock(WCHAR *filename, DWORD shareMode, UserCallback opLock
 	return opLock;
 }
 
-void wait_for_lock(FILE_OPLOCK *opLock, UINT Timeout) {
+__declspec(dllexport) void wait_for_lock(FILE_OPLOCK *opLock, UINT Timeout) {
 	WaitForSingleObject(opLock->g_hLockCompleted, Timeout);
 }
 
-void delete_oplock(FILE_OPLOCK *opLock) {
+__declspec(dllexport) void delete_oplock(FILE_OPLOCK *opLock) {
 	if (opLock->ptpWait) {
 		SetThreadpoolWait(opLock->ptpWait, NULL, NULL);
 		CloseThreadpoolWait(opLock->ptpWait);

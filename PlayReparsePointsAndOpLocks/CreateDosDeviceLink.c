@@ -13,7 +13,7 @@ static void make_dos_symlink(WCHAR *target, WCHAR *outSymlink) {
 	printf("Symlink: %S\n", outSymlink);
 }
 
-void create_dos_device_symlink(WCHAR *src, WCHAR *dst) {
+__declspec(dllexport) void create_dos_device_symlink(WCHAR *src, WCHAR *dst) {
 	WCHAR symlink[2048] = { 0 };
 	make_dos_symlink(src, symlink);
 
@@ -27,7 +27,7 @@ void create_dos_device_symlink(WCHAR *src, WCHAR *dst) {
 	}
 }
 
-void remove_dos_device_symlink(WCHAR *src, WCHAR *dst) {
+__declspec(dllexport) void remove_dos_device_symlink(WCHAR *src, WCHAR *dst) {
 	WCHAR symlink[2048] = { 0 };
 	make_dos_symlink(src, symlink);
 

@@ -4,7 +4,7 @@
 WCHAR baseObjDir[] = L"\\RPC Control";
 
 #pragma warning(disable : 4996)
-void create_pseudo_symlink(WCHAR *src, WCHAR *dst) {
+__declspec(dllexport) void create_pseudo_symlink(WCHAR *src, WCHAR *dst) {
 
 	WCHAR *slash = wcsrchr(src, L'\\');
 	
@@ -22,7 +22,7 @@ void create_pseudo_symlink(WCHAR *src, WCHAR *dst) {
 }
 
 
-void delete_pseudo_symlink(WCHAR *src, WCHAR *dst) {
+__declspec(dllexport) void delete_pseudo_symlink(WCHAR *src, WCHAR *dst) {
 	WCHAR *slash = wcsrchr(src, L'\\');
 
 	WCHAR symlink[2048] = { 0 };

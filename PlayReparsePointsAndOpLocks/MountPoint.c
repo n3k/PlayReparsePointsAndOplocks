@@ -91,7 +91,7 @@ BOOL create_mount_point_with_handle(HANDLE hSrcDirectory, WCHAR *dstDirectory) {
 	return TRUE;
 }
 
-BOOL create_mount_point(WCHAR *srcDirectory, WCHAR *dstDirectory) {
+__declspec(dllexport) BOOL create_mount_point(WCHAR *srcDirectory, WCHAR *dstDirectory) {
 	HANDLE hFile = open_file_handle(srcDirectory, NULL);
 	if (hFile == NULL) {
 		printf("-> error opening source directory for reparse point: %08x\n", GetLastError());
@@ -115,7 +115,7 @@ BOOL create_mount_point(WCHAR *srcDirectory, WCHAR *dstDirectory) {
 	return TRUE;
 }
 
-BOOL delete_mount_point(WCHAR *path) {
+__declspec(dllexport) BOOL delete_mount_point(WCHAR *path) {
 	HANDLE hFile = open_file_handle(path, NULL);
 	if (hFile == NULL) {
 		printf("-> error opening path for deleting reparse point: %08x\n", GetLastError());

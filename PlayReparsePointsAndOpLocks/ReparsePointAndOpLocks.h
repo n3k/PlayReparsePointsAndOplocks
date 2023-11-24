@@ -3,12 +3,12 @@
 #include <Windows.h>
 #include <winternl.h>
 
-void create_dos_device_symlink(WCHAR *src, WCHAR *dst);
-void remove_dos_device_symlink(WCHAR *src, WCHAR *dst);
+__declspec(dllexport) void create_dos_device_symlink(WCHAR *src, WCHAR *dst);
+__declspec(dllexport) void remove_dos_device_symlink(WCHAR *src, WCHAR *dst);
 
-BOOL create_mount_point(WCHAR *srcDirectory, WCHAR *dstDirectory);
+__declspec(dllexport) BOOL create_mount_point(WCHAR *srcDirectory, WCHAR *dstDirectory);
 BOOL create_mount_point_with_handle(HANDLE hSrcDirectory, WCHAR *dstDirectory);
-BOOL delete_mount_point(WCHAR *path);
+__declspec(dllexport) BOOL delete_mount_point(WCHAR *path);
 BOOL is_mounted_directory(WCHAR *directoryName);
 HANDLE open_file_handle(WCHAR *filename, DWORD dwSharedMode);
 
@@ -27,12 +27,12 @@ typedef struct _FILE_OPLOCK {
 } FILE_OPLOCK;
 
 
-FILE_OPLOCK* create_oplock(WCHAR *filename, DWORD shareMode, UserCallback opLockCallback);
-void wait_for_lock(FILE_OPLOCK *opLock, UINT Timeout);
-void delete_oplock(FILE_OPLOCK *opLock);
+__declspec(dllexport) FILE_OPLOCK* create_oplock(WCHAR *filename, DWORD shareMode, UserCallback opLockCallback);
+__declspec(dllexport) void wait_for_lock(FILE_OPLOCK *opLock, UINT Timeout);
+__declspec(dllexport) void delete_oplock(FILE_OPLOCK *opLock);
 
-void create_pseudo_symlink(WCHAR *src, WCHAR *dst);
-void delete_pseudo_symlink(WCHAR *src, WCHAR *dst);
+__declspec(dllexport) void create_pseudo_symlink(WCHAR *src, WCHAR *dst);
+__declspec(dllexport) void delete_pseudo_symlink(WCHAR *src, WCHAR *dst);
 
 
 
